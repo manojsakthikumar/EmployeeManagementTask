@@ -1,0 +1,182 @@
+﻿@model IEnumerable<EmployeeManagement.Models.Employee>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/js/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<style>
+</style>
+
+<script>
+
+
+
+    $(function () {
+        var PlaceHolderElement = $('#PlaceHolderHere');
+        $('button[data-toggle="ajax-modal"]').click(function (event) {
+            var url = $(this).data('url');
+            $.get(url).done(function (data) {
+                PlaceHolderElement.html(data);
+                PlaceHolderElement.find('#viewEditEmployee').modal('show');
+            })
+        })
+
+        PlaceHolderElement.on('click', '[data-save="modal"]', function (event) {
+            var form = $(this).parents('.modal').find('form');
+            var actionURL = form.attr('action');
+            var sendData = form.serialize();
+            console.log(sendData);
+            $.post(actionURL, sendData).done(function (data) {
+                PlaceHolderElement.find('#viewEditEmployee').modal('hide');
+                window.location.reload();
+            })
+        })
+    })
+
+    $(function () {
+        var PlaceHolderElement = $('#PlaceHolderSalary');
+        $('button[data-toggle="ajax-modal"]').click(function (event) {
+            var url = $(this).data('url');
+            $.get(url).done(function (data) {
+                PlaceHolderElement.html(data);
+                PlaceHolderElement.find('#viewSalaryDetail').modal('show');
+            })
+        })
+
+        PlaceHolderElement.on('click', '[data-save="modal"]', function (event) {
+            var form = $(this).parents('.modal').find('form');
+            var actionURL = form.attr('action');
+            var sendData = form.serialize();
+            console.log(sendData);
+            $.post(actionURL, sendData).done(function (data) {
+                PlaceHolderElement.find('#viewSalaryDetail').modal('hide');
+                window.location.reload();
+            })
+        })
+    })
+
+</script>
+
+<h1>Index</h1>
+
+
+<p>
+    <a asp-action="Create">Create New Employee</a>
+</p>
+<table class="table" id="EmployeeTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ZIP)
+            </th>
+            <th>
+                View Salary
+            </th>
+            <th>
+                Add Salary
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                <button type="button" data-toggle="ajax-modal" data-target="#viewEditEmployee"
+                        data-url="@Url.Action("GetEmployeeModal",new { id =item.ID })">
+                    @Html.DisplayFor(modelItem => item.ID)
+                </button>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ZIP)
+            </td>
+            <td>
+                <button type="button" data-toggle="ajax-modal" class="btn btn-success relative" data-target="#viewSalaryDetail"
+                        data-url="@Url.Action("GetSalaryModal",new { id =item.ID })">
+                    View Salary
+                </button>
+            </td>
+            <td>
+
+                @*<button type="button" data-toggle="ajax-modal" class="btn btn-success relative" data-url="@Url.Action("CreateEmployeeSalary")" asp-action="CreateEmployeeSalary">
+                    Add Salary
+                </button>*@
+                <a asp-action="CreateEmployeeSalary" asp-route-id="@item.ID">Add Salary</a> |
+            </td>
+            <td>
+                @*<a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |*@
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+        }
+
+    </tbody>
+</table>
+
+<div id="PlaceHolderHere"></div>
+
+<div id="partialModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Employee Details Form</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<div id="PlaceHolderSalary"></div>
+
+<div id="partialModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Employee Salary</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>

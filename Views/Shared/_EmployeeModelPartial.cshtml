@@ -1,0 +1,87 @@
+﻿@model Employee;
+
+
+
+
+    <div class="modal" id="viewEditEmployee" tabindex="-1" role="dialog" aria-labelledby="viewEditEmployeeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="width:90%; height:30rem" ;>
+            <div class="modal-content">
+                <!--Modal Header Start-->
+                <div class="modal-header">
+                    <h4 class="modal-title">Employee Detail</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <!--Modal Header End-->
+               
+
+                    <form asp-action="CreateEdit" asp-controller="User" method="post" enctype="multipart/form-data">
+
+
+                        <div class="modal-body form-horizontal">
+                            <div class="form-group row">
+                                @Html.HiddenFor(model => model.FirstName)
+                                @Html.LabelFor(model => model.FirstName, new { @class = "col-sm-2 col-form-label" })
+                                <div class="col-sm-10">
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <!--Modal Footer Start-->
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" id="cancel" class="btn btn-default" type="button">Cancel</button>
+                            <button class="btn btn-success relative" id="btnSubmit" type="submit">
+                                <i class="loader"></i>
+                                Submit
+                            </button>
+                        </div>
+                        <!--Modal Footer End-->
+                    </form>
+                
+
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="viewSalaryDetail" tabindex="-1" role="dialog" aria-labelledby="viewSalaryDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="width:90%; height:30rem" ;>
+            <div class="modal-content">
+                <!--Modal Header Start-->
+                <div class="modal-header">
+                    <h4 class="modal-title">Employee Detail</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <!--Modal Header End-->
+
+
+                <form asp-action="CreateEdit" asp-controller="User" method="post" enctype="multipart/form-data">
+
+
+                    <div class="modal-body form-horizontal">
+                        <div class="form-group row">
+                            @Html.HiddenFor(model => model.FirstName)
+                            @Html.LabelFor(model => model.FirstName, new { @class = "col-sm-2 col-form-label" })
+                            <div class="col-sm-10">
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <!--Modal Footer Start-->
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" id="cancel" class="btn btn-default" type="button">Cancel</button>
+                        <button class="btn btn-success relative" id="btnSubmit" type="submit">
+                            <i class="loader"></i>
+                            Submit
+                        </button>
+                    </div>
+                    <!--Modal Footer End-->
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+

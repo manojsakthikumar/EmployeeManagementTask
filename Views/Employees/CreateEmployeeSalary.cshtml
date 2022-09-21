@@ -1,0 +1,48 @@
+﻿@model EmployeeManagement.Models.EmployeeSalary
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>EmployeeSalary</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateEmployeeSalary">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EmployeeId" class="control-label"></label>
+                <input asp-for="EmployeeId" class="form-control" readonly/>
+                @*<select asp-for="EmployeeId" class="form-control" asp-items="ViewBag.EmployeeId"></select>*@
+            </div>
+            <div class="form-group">
+                <label asp-for="SalaryDate" class="control-label"></label>
+                <input type="date" value="2022-01-01" asp-for="SalaryDate" class="form-control" />
+                <span asp-validation-for="SalaryDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+         
+            <div class="form-group">
+                <input type="submit" value="CreateEmployeeSalary" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<script>
+    datePickerId.max = new Date().toLocaleDateString('en-ca');
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
