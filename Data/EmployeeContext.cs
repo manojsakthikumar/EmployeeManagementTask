@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using EmployeeManagement.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+
 
 
 namespace EmployeeManagement.Data

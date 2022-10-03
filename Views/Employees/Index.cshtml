@@ -13,7 +13,9 @@
 <script>
 
 
-
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
     $(function () {
         var PlaceHolderElement = $('#PlaceHolderHere');
         $('button[data-toggle="ajax-modal"]').click(function (event) {
@@ -64,7 +66,7 @@
 
 
 <p>
-    <a asp-action="Create">Create New Employee</a>
+    <a asp-action="Create" class="btn btn-success btn-sm" data-toggle="tooltip" title="Click here to Create New Employee">Create New Employee</a>
 </p>
 <table class="table" id="EmployeeTable">
     <thead>
@@ -98,10 +100,11 @@
         {
         <tr>
             <td>
-                <button type="button" data-toggle="ajax-modal" data-target="#viewEditEmployee"
-                        data-url="@Url.Action("GetEmployeeModal",new { id =item.ID })">
+                <button class="btn btn-success" href ="" type="button" data-toggle="ajax-modal" data-target="#viewEditEmployee"
+                       data-toggle="tooltip" title="Click here to Edit Employee" data-url="@Url.Action("GetEmployeeModal",new { id =item.ID })">
                     @Html.DisplayFor(modelItem => item.ID)
                 </button>
+
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
@@ -117,7 +120,7 @@
             </td>
             <td>
                 <button type="button" data-toggle="ajax-modal" class="btn btn-success relative" data-target="#viewSalaryDetail"
-                        data-url="@Url.Action("GetSalaryModal",new { id =item.ID })">
+                        data-url="@Url.Action("GetSalaryModal",new { id=item.ID})">
                     View Salary
                 </button>
             </td>
@@ -126,12 +129,13 @@
                 @*<button type="button" data-toggle="ajax-modal" class="btn btn-success relative" data-url="@Url.Action("CreateEmployeeSalary")" asp-action="CreateEmployeeSalary">
                     Add Salary
                 </button>*@
-                <a asp-action="CreateEmployeeSalary" asp-route-id="@item.ID">Add Salary</a> |
+                <a asp-action="CreateEmployeeSalary" class="btn btn-success" data-toggle="tooltip" title="Click here to Add Salary" asp-route-id="@item.ID">Add Salary</a>
             </td>
             <td>
                 @*<a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |*@
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Details" class="btn btn-success" data-toggle="tooltip" title="Click here to view Employee Details" asp-route-id="@item.ID">Details</a>
+
+                <a asp-action="Delete" class="btn btn-danger" data-toggle="tooltip" title="Click here to Delete Employee" asp-route-id="@item.ID">Delete</a>
             </td>
         </tr>
         }

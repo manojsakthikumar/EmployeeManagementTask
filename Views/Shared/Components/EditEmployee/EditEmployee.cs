@@ -37,6 +37,7 @@ namespace EmployeeManagement.Views.Shared.Component
             
 
            // employee = (Employee)employeedata;
+
             return View("~/Views/Shared/Components/EditEmployee/Default.cshtml", employeesalarydata);
         }
        

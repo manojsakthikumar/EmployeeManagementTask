@@ -1,37 +1,45 @@
 ﻿@model List<EmployeeManagement.Models.EmployeeSalary>;
 
 <div class="modal" id="viewSalaryDetail" tabindex="-1" role="dialog" aria-labelledby="viewSalaryDetailModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="width:70%; height:25rem" ;>
+    <div class="modal-dialog modal-dialog-centered" role="document" style="width:70%; height:25rem" ;>
         <div class="modal-content">
             <!--Modal Header Start-->
             <div class="modal-header">
-                <h4 class="modal-title">Employee Salary Detail</h4>
+                <h4 class="modal-title">Employee Salary Detail
+                </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body modal-dialog-scrollable">
+                    <table class="table table-bordered table-hover table-fixed-header">
+                        <thead class="header">
+                            <tr style="background-color: lightgreen;">
+                                <th class="text-center"> Salary Date</th>
+                                <th class="text-center"> Amount </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var employee in Model)
+                            {
+                                <form asp-action="EmployeeSalary" asp-controller="EmployeeSalaries" method="get" enctype="multipart/form-data">
+
+                                    @Html.AntiForgeryToken()
+
+                                <tr>
+                                    <td class="text-center">@employee.SalaryDate.ToString("dd-MMM-yyyy")</td>
+                                    <td class="text-center">@employee.Amount </td>
+
+                                </tr>
+
+
+
+                                <!--Modal Footer End-->
+                                </form>
+                            }
+                        </tbody>
+                    </table>
             </div>
             <!--Modal Header End-->
-            <table>
-                <tr>
-                    <th> Amount </th>
-                    <th> Salary Date</th>
-                </tr>
-                @foreach (var employee in Model)
-                {
-
-                    <form asp-action="EmployeeSalary" asp-controller="EmployeeSalaries" method="get" enctype="multipart/form-data">
-
-                        @Html.AntiForgeryToken()
-
-                    <tr>
-                        <td>@employee.Amount</td>
-                        <td>@employee.SalaryDate</td>
-                    </tr>
-
-
-
-                    <!--Modal Footer End-->
-                    </form>
-                }
-            </table>
+            
             <!--Modal Footer Start-->
             <div class="modal-footer">
                 <button data-dismiss="modal" id="cancel" class="btn btn-success" type="button"><i class="loader"></i>Cancel</button>

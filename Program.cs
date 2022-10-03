@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace EmployeeManagement
 {
@@ -15,11 +16,38 @@ namespace EmployeeManagement
     {
         public static void Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
+            //Read Configuration from appSettings
+            var config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-            CreateDbIfNotExists(host);
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(config)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.File("C:\\log.txt",rollingInterval:RollingInterval.Day)
+                .CreateLogger();
+            try
+            {
+                CreateHostBuilder(args).Build().Run();
 
-            host.Run();
+            }
+            catch (Exception exception)
+            {
+                Log.Fatal(exception, "Failed to initialize HostBuilder");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
+        
+            //var host = CreateHostBuilder(args).Build();
+
+            //CreateDbIfNotExists(host);
+            
+            //host.Run();
+
+
            // CreateHostBuilder(args).Build().Run();
         }
 
@@ -28,14 +56,16 @@ namespace EmployeeManagement
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
+                var logger = services.GetRequiredService<ILogger<Program>>();
                 try
                 {
                     var context = services.GetRequiredService<EmployeeContext>();
+                    logger.LogInformation("Database Created Successfully");
                     DbInitializer.Initialize(context);
+                    
                 }
                 catch (Exception ex)
                 {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
                     logger.LogError(ex, "An error occurred creating the DB.");
                 }
             }
@@ -43,6 +73,7 @@ namespace EmployeeManagement
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
